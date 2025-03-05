@@ -1,10 +1,26 @@
 const schema = require('mongoose').schema
 
 const definition = {
-	"productId": String,
-	"quantity": {
+	"productId": {
+		"type": String,
+		"required": true,
+	},
+	'catalog_number': {
+		"type": String,
+		"required": true,
+	},
+	"name": {
+		"type": String,
+		"required": true,
+	},
+	"unit_of_measure": {
+		"type": Number,
+		"unit": String,
+	},
+	"quantity_on_hand": {
 		"type": Number,
 	},
+
 	"_metadata": {
 		"createdAt": {
 			"type": Date,
