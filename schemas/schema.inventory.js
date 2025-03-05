@@ -5,7 +5,7 @@ const definition = {
 		"type": String,
 		"required": true,
 	},
-	'catalog_number': {
+	'catalogNumber': {
 		"type": String,
 		"required": true,
 	},
@@ -13,11 +13,11 @@ const definition = {
 		"type": String,
 		"required": true,
 	},
-	"unit_of_measure": {
+	"unitOfMeasure": {
 		"type": Number,
 		"unit": String,
 	},
-	"quantity_on_hand": {
+	"quantityOnHand": {
 		"type": Number,
 	},
 
