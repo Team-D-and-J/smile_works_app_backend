@@ -37,9 +37,16 @@ async function connectToMongoDB() {
     }
 }
 
-
+// Model Names
 const modelNames = {
     user: "User",
+    notification: "Notification"
+};
+
+// Authentication Config
+const auth = {
+    jwtTokenSecret: process.env.AUTH_JWT_SECRET || "123",
+    jwtTokenExpiry: process.env.AUTH_JWT_DURATION || "1h"
 };
 
 // Export Configurations
@@ -49,4 +56,5 @@ module.exports = {
     LOG_LEVEL,
     logger,
     modelNames,
+    auth 
 };
