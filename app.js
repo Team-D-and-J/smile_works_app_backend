@@ -4,7 +4,7 @@ const logger = init.logger;
 const jwt = require("jsonwebtoken");
 
 const app = express();
-app.use(express.json());
+app.use(express.json()); // Enable JSON parsing in incoming requests
 
 const apiLogger = require("./lib/middleware.apiLogger");
 app.use(apiLogger);

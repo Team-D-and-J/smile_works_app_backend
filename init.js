@@ -43,7 +43,7 @@ const modelNames = {
     notification: "Notification"
 };
 
-// Authentication Config
+// Authentication Config (Merged from both branches)
 const auth = {
     jwtTokenSecret: process.env.AUTH_JWT_SECRET || "123",
     jwtTokenExpiry: process.env.AUTH_JWT_DURATION || "1h"
