@@ -30,7 +30,12 @@ app.use(function (req, res, next) {
 });
 
 const authRouter = require('./routes/routes.auth');
+const productRouter = require('./routes/routes.productMaster')
+const treatmentRouter = require('./routes/routes.treatment');
+
 app.use('/api/auth', authRouter);
+app.use('/api/products', productRouter);
+app.use('/api/treatments', treatmentRouter);
 
 
 app.listen(PORT, () => {//command node app.js to run

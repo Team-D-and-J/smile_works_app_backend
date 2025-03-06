@@ -23,22 +23,24 @@ const treatementSchema = {
         required: true,
     },
     steps: {
-        type: [String], 
+        type: String, 
         required: true,
     },
-    files: {
-        type: [String], 
-        required: true,
-    },
-    link: {
-        type: String,
-        required: true,
-    },
-    typeOfFile: {
-        type: String,
-        enum: ['doc', 'img', 'video', 'audio'], 
-        required: true,
-    },
+    files: [{
+        fileName: { 
+            type: String, 
+            required: true 
+        },
+        fileLink: { 
+            type: String, 
+            required: true 
+        },
+        fileType: { 
+            type: String, 
+            enum: ['doc', 'img', 'video', 'audio'],
+            required: true
+        },
+    }],
     _metadata: {
         createdAt: {
             type: Date,
