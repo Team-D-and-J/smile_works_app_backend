@@ -1,7 +1,7 @@
 const schema = require('mongoose').schema;
 
 const definition = {
-	"_userId": String,
+	"_id": String,
 	"name": {
 		"type": String,
 		"required": true,
