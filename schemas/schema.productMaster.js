@@ -23,8 +23,7 @@ const productSchema = {
         required: true 
     },
     vendorName: { 
-        type: String, 
-        required: true 
+        type: String
     },
     _metadata: {
         createdAt: { 
@@ -33,8 +32,7 @@ const productSchema = {
         },
         lastUpdatedAt: { 
             type: Date, 
-            default: Date.now, 
-            required: true 
+            default: Date.now
         },
         updatedBy: { 
             type: String, 

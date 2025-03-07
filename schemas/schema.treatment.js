@@ -23,12 +23,11 @@ const treatementSchema = {
         required: true,
     },
     steps: {
-        type: String, 
-        required: true,
+        type: String
     },
     files: [{
         fileName: { 
-            type: String, 
+            type: String,
             required: true 
         },
         fileLink: { 
@@ -36,9 +35,7 @@ const treatementSchema = {
             required: true 
         },
         fileType: { 
-            type: String, 
-            enum: ['doc', 'img', 'video', 'audio'],
-            required: true
+            type: String
         },
     }],
     _metadata: {
