@@ -1,8 +1,8 @@
 const schema = require('mongoose').schema;
 
 const definition = {
-	"_appointmentId": String,
-	"dentistId": {
+	"_id": String,
+	"doctorId": {
 		"type": String,
 		"required": String,
 	},
@@ -14,13 +14,10 @@ const definition = {
 		"type": Date,
 		"required": true,
 	},
-	"time": { // Format -> HH:mm
-		"type": String,
-		"required": true,
-	},
 	"treatmentMaster": String,
 	"status": {
-		"type": Boolean,
+		"type": String,
+		"enum": ["No show", "confirmed", "arrived", "cancelled"],
 		"required": true,
 	},
 	_metadata: {

@@ -1,7 +1,11 @@
 const schema = require('mongoose').schema
 
 const definition = {
-	"productId": {
+	"_id": {
+		"type": String,
+		"required": true,
+	},
+	"clinicId": {
 		"type": String,
 		"required": true,
 	},
@@ -9,15 +13,11 @@ const definition = {
 		"type": String,
 		"required": true,
 	},
-	"name": {
-		"type": String,
-		"required": true,
-	},
 	"unitOfMeasure": {
 		"type": Number,
 		"unit": String,
 	},
-	"quantityOnHand": {
+	"stock": {
 		"type": Number,
 	},
 

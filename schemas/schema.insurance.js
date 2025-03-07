@@ -2,8 +2,8 @@ const schema = require('mongoose').schema;
 
 const definition = {
 	"_id": String,
-	"insuranceCo": String,
-	"Discount": {
+	"insuranceCompany": String,
+	"discount": {
 		"type": Number,
 		default: 0,
 	},
