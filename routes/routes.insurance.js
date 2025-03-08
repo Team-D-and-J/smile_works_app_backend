@@ -17,13 +17,13 @@ router.delete("/utils/deleteMany", crud.deleteMany);
 router.post("/utils/aggregate", crud.aggregate);
 router.post("/verify", async (req, res) => {
     
-    const { insuranceCo, memberId, groupNumber } = req.body;
-    if(!insuranceCo || !memberId){
+    const { insuranceCompany, memberId, groupNumber } = req.body;
+    if(!insuranceCompany || !memberId){
         return res.status(400).json({status: "Error", message: "Missing required fields"});
     }
 
     try{
-        let query = { insuranceCo, memberId };
+        let query = { insuranceCompany, memberId };
 
         if(groupNumber){
             query.groupNumber = groupNumber;
