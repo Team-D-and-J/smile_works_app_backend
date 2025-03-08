@@ -43,7 +43,9 @@ const modelNames = {
     user: "User",
     notification: "Notification",
     treatment: "Treatment",
-    productMaster: "ProductMaster"
+    productMaster: "ProductMaster",
+    inventory: "Inventory",
+    appointment: "Appointment",
 };
 
 // Authentication Config (Merged from both branches)
@@ -59,5 +61,5 @@ module.exports = {
     LOG_LEVEL,
     logger,
     modelNames,
-    auth 
+    auth
 };
