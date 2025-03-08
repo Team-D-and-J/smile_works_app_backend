@@ -1,9 +1,11 @@
 const express = require("express");
 const init = require("./init");
+const cors = require("cors");
 const logger = init.logger;
 const jwt = require("jsonwebtoken");
 
 const app = express();
+app.use(cors());
 app.use(express.json()); // Enable JSON parsing in incoming requests
 
 const apiLogger = require("./lib/middleware.apiLogger");
