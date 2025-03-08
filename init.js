@@ -43,7 +43,8 @@ const modelNames = {
     user: "User",
     notification: "Notification",
     treatment: "Treatment",
-    productMaster: "ProductMaster"
+    productMaster: "ProductMaster",
+    insurance: "Insurance"
 };
 
 // Authentication Config (Merged from both branches)

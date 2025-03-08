@@ -1,9 +1,11 @@
 const express = require("express");
+const cors = require("cors"); 
 const init = require("./init");
 const logger = init.logger;
 const jwt = require("jsonwebtoken");
 
 const app = express();
+app.use(cors());
 app.use(express.json()); // Enable JSON parsing in incoming requests
 
 const apiLogger = require("./lib/middleware.apiLogger");
@@ -14,6 +16,8 @@ const notificationRouter = require("./routes/routes.notification");
 const authRouter = require("./routes/routes.auth");
 const treatmentRouter = require("./routes/routes.treatment");
 const productMasterRouter = require("./routes/routes.productMaster");
+const insuranceRouter = require("./routes/routes.insurance");
+
 
 // Middleware for protecting routes (except login)
 app.use(function (req, res, next) {
@@ -47,6 +51,7 @@ app.use(function (req, res, next) {
     app.use("/api/auth", authRouter);
     app.use("/api/treatments", treatmentRouter);
     app.use("/api/products", productMasterRouter);
+    app.use("/api/insurance", insuranceRouter);
 
 
     app.listen(init.PORT, async () => {
