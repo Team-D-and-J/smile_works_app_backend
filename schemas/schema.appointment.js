@@ -17,7 +17,7 @@ const definition = {
 	"treatmentMaster": String,
 	"status": {
 		"type": String,
-		"enum": ["No show", "confirmed", "arrived", "cancelled"],
+		"enum": ["No show", "Confirmed", "Arrived", "Cancelled"],
 		"required": true,
 	},
 	_metadata: {

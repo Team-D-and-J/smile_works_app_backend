@@ -9,7 +9,7 @@ const definition = {
 		"type": String,
 		"required": true,
 	},
-	'catalogNumber': {
+	'productId': {
 		"type": String,
 		"required": true,
 	},
