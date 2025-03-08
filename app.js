@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors"); 
 const init = require("./init");
+const cors = require("cors");
 const logger = init.logger;
 const jwt = require("jsonwebtoken");
 
