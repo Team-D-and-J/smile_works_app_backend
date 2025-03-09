@@ -16,11 +16,12 @@ const notificationRouter = require("./routes/routes.notification");
 const authRouter = require("./routes/routes.auth");
 const treatmentRouter = require("./routes/routes.treatment");
 const productMasterRouter = require("./routes/routes.productMaster");
+const inventoryRouter = require("./routes/routes.inventory");
 const insuranceRouter = require("./routes/routes.insurance");
 
 
 // Middleware for protecting routes (except login)
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     if (req.path.startsWith("/api/auth/login")) {
         next();
         return;
@@ -51,6 +52,7 @@ app.use(function (req, res, next) {
     app.use("/api/auth", authRouter);
     app.use("/api/treatments", treatmentRouter);
     app.use("/api/products", productMasterRouter);
+    app.use("/api/inventory", inventoryRouter);
     app.use("/api/insurance", insuranceRouter);
 
 
