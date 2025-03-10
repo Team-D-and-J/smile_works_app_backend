@@ -46,6 +46,7 @@ const modelNames = {
     productMaster: "ProductMaster",
     inventory: "Inventory",
     appointment: "Appointment",
+    clinic: "Clinic"
 };
 
 // Authentication Config (Merged from both branches)

@@ -22,6 +22,7 @@ const insuranceRouter = require("./routes/routes.insurance");
 // Store blacklisted tokens in memory
 const blacklistedTokens = new Set(); 
 app.set("blacklistedTokens", blacklistedTokens); 
+const clinicRouter = require("./routes/routes.clinic");
 
 // Middleware for protecting routes (except login and logout)
 app.use(function (req, res, next) {
@@ -63,6 +64,7 @@ app.use(function (req, res, next) {
     app.use("/api/products", productMasterRouter);
     app.use("/api/inventory", inventoryRouter);
     app.use("/api/insurance", insuranceRouter);
+    app.use("/api/clinics", clinicRouter);
 
     app.listen(init.PORT, async () => {
         logger.info(`Server is running on port ${init.PORT}`);

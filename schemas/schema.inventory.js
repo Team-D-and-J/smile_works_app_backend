@@ -1,4 +1,4 @@
-const schema = require('mongoose').Schema
+const schema = require('mongoose').Schema;
 
 const definition = {
 	"_id": {
