@@ -5,7 +5,7 @@ const init = require('../init');
 
 router.post('/login', (req, res) => {
     const body = req.body;
-    if (body.password !== "1234") { // Replace with real authentication logic
+    if (body.password != "1234") {//------------1234 is password test while the real data from database is created
         return res.status(401).json({ message: "Invalid credentials" });
     }
 
