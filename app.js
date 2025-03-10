@@ -3,6 +3,7 @@ const init = require("./init");
 const cors = require("cors");
 const logger = init.logger;
 const jwt = require("jsonwebtoken");
+const {createMetadata, updateMetadata} = require('./lib/metadataHandler')
 
 const app = express();
 app.use(cors());
@@ -44,6 +45,16 @@ app.use(function(req, res, next) {
     } catch (error) {
         return res.status(401).json({ message: "Unauthorized" });
     }
+});
+
+// **Middleware 2: Metadata Handling (For POST and PUT Requests)**
+app.use((req, res, next) => {
+    if (req.method === "POST" || req.method === "PUT") {
+        req.body._metadata = req.body._metadata 
+            ? updateMetadata(req, req.body._metadata)
+            : createMetadata(req);
+    }
+    next();
 });
 
 (async () => {
