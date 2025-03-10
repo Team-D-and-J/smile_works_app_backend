@@ -19,28 +19,37 @@ const productMasterRouter = require("./routes/routes.productMaster");
 const inventoryRouter = require("./routes/routes.inventory");
 const insuranceRouter = require("./routes/routes.insurance");
 
+// Store blacklisted tokens in memory
+const blacklistedTokens = new Set(); 
+app.set("blacklistedTokens", blacklistedTokens); 
 
-// Middleware for protecting routes (except login)
-app.use(function(req, res, next) {
-    if (req.path.startsWith("/api/auth/login")) {
+// Middleware for protecting routes (except login and logout)
+app.use(function (req, res, next) {
+    if (req.path.startsWith("/api/auth/login") || req.path.startsWith("/api/auth/logout")) {
         next();
         return;
     }
 
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Unauthorized - No token provided" });
     }
 
     try {
         const token = authHeader.split(" ")[1];
+
+        // Check if token is blacklisted (user logged out)
+        if (blacklistedTokens.has(token)) {
+            return res.status(401).json({ message: "Unauthorized - Token has been logged out" });
+        }
+
         const tokenData = jwt.verify(token, init.auth.jwtTokenSecret);
         if (!tokenData) {
-            return res.status(401).json({ message: "Unauthorized" });
+            return res.status(401).json({ message: "Unauthorized - Invalid token" });
         }
         next();
     } catch (error) {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Unauthorized - Invalid token" });
     }
 });
 
@@ -54,7 +63,6 @@ app.use(function(req, res, next) {
     app.use("/api/products", productMasterRouter);
     app.use("/api/inventory", inventoryRouter);
     app.use("/api/insurance", insuranceRouter);
-
 
     app.listen(init.PORT, async () => {
         logger.info(`Server is running on port ${init.PORT}`);
