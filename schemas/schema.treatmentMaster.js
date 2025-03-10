@@ -25,6 +25,15 @@ const treatmentMasterSchema = {
         type: String,
         required: true
     },
+    /**
+     * Specification:
+     * - Can be a single string or an array of strings.("Adult", ["Adult","Adolescent" ])
+     * - For some treatments (e.g., Braces, Implants), we might need additional details like the type of tooth.
+     * - Example values: "Adult", "Adolescent", "Molar", "Incisor", etc.
+     */
+    specification: {
+        type: schema.Types.Mixed
+    },
     cost: {
         type: Number,
         required: true
