@@ -19,6 +19,7 @@ const productMasterRouter = require("./routes/routes.productMaster");
 const inventoryRouter = require("./routes/routes.inventory");
 const insuranceRouter = require("./routes/routes.insurance");
 
+const clinicRouter = require("./routes/routes.clinic");
 
 // Middleware for protecting routes (except login)
 app.use(function(req, res, next) {
@@ -54,6 +55,7 @@ app.use(function(req, res, next) {
     app.use("/api/products", productMasterRouter);
     app.use("/api/inventory", inventoryRouter);
     app.use("/api/insurance", insuranceRouter);
+    app.use("/api/clinics", clinicRouter);
 
 
     app.listen(init.PORT, async () => {
