@@ -1,4 +1,4 @@
-const schema = require('mongoose').schema
+const schema = require('mongoose').Schema;
 
 const definition = {
 	"_id": {
@@ -47,4 +47,4 @@ const definition = {
 	}
 }
 
-modeul.exports = schema(definition);
+module.exports = schema(definition);
