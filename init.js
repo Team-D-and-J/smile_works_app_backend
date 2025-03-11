@@ -43,6 +43,7 @@ const modelNames = {
     user: "User",
     notification: "Notification",
     treatment: "Treatment",
+    treatmentMaster: "TreatmentMaster",
     productMaster: "ProductMaster",
     inventory: "Inventory",
     appointment: "Appointment",

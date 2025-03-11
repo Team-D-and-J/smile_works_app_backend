@@ -3,6 +3,7 @@ const init = require("./init");
 const cors = require("cors");
 const logger = init.logger;
 const jwt = require("jsonwebtoken");
+const {createMetadata, updateMetadata} = require('./lib/metadataHandler')
 
 const app = express();
 app.use(cors());
@@ -15,6 +16,7 @@ const userRouter = require("./routes/routes.user");
 const notificationRouter = require("./routes/routes.notification");
 const authRouter = require("./routes/routes.auth");
 const treatmentRouter = require("./routes/routes.treatment");
+const treatmentMasterRouter = require("./routes/routes.treatmentMaster");
 const productMasterRouter = require("./routes/routes.productMaster");
 const inventoryRouter = require("./routes/routes.inventory");
 const insuranceRouter = require("./routes/routes.insurance");
@@ -54,6 +56,16 @@ app.use(function (req, res, next) {
     }
 });
 
+// **Middleware 2: Metadata Handling (For POST and PUT Requests)**
+app.use((req, res, next) => {
+    if (req.method === "POST" || req.method === "PUT") {
+        req.body._metadata = req.body._metadata 
+            ? updateMetadata(req, req.body._metadata)
+            : createMetadata(req);
+    }
+    next();
+});
+
 (async () => {
     await init.connectToMongoDB();
 
@@ -61,6 +73,7 @@ app.use(function (req, res, next) {
     app.use("/api/notifications", notificationRouter);
     app.use("/api/auth", authRouter);
     app.use("/api/treatments", treatmentRouter);
+    app.use("/api/treatmentmaster", treatmentMasterRouter);
     app.use("/api/products", productMasterRouter);
     app.use("/api/inventory", inventoryRouter);
     app.use("/api/insurance", insuranceRouter);
