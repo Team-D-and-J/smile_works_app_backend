@@ -1,15 +1,15 @@
-const schema = require('mongoose').schema
+const schema = require('mongoose').Schema;
 
 const definition = {
-	"productId": {
+	"_id": {
 		"type": String,
 		"required": true,
 	},
-	'catalogNumber': {
+	"clinicId": {
 		"type": String,
 		"required": true,
 	},
-	"name": {
+	'productId': {
 		"type": String,
 		"required": true,
 	},
@@ -17,7 +17,7 @@ const definition = {
 		"type": Number,
 		"unit": String,
 	},
-	"quantityOnHand": {
+	"stock": {
 		"type": Number,
 	},
 
@@ -47,4 +47,4 @@ const definition = {
 	}
 }
 
-modeul.exports = schema(definition);
+module.exports = schema(definition);
