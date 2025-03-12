@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const mongooseCrud = require("mongoose-express-middleware");
-const appointmentSchema = require("../schemas/schema.appointment");
+const treatmentSchema = require("../schemas/schema.treatment");
 
-const appointmentCollection = "appointment";
-const crud = new mongooseCrud(appointmentCollection, appointmentSchema, null);
+const treatmentCollection = "treatments"; 
+const crud = new mongooseCrud(treatmentCollection, treatmentSchema, null);
 
 // Define API routes
 router.get("/", crud.find);

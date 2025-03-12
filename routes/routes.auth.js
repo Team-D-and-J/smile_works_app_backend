@@ -41,21 +41,49 @@ router.post('/login', async(req, res) =>{
   
 });
 
-router.get('/verify', (req, res)=> {
-    try{
+router.get('/verify', (req, res) => {
+    try {
         let token = req.headers.authorization;
+        if (!token) {
+            return res.status(401).json({ message: 'Token is missing' });
+        }
+
         const tokenParts = token.split(' ');
         token = tokenParts[1];
-    
-    if(jwt.verify(token, init.auth.jwtTokenSecret)) {
-         res.status(200).json({message: 'Token is valid'})
+
+        // Get shared blacklist from app.js
+        const blacklistedTokens = req.app.get("blacklistedTokens");
+
+        if (blacklistedTokens.has(token)) {
+            return res.status(401).json({ message: "Token has been logged out" });
+        }
+
+        if (jwt.verify(token, init.auth.jwtTokenSecret)) {
+            res.status(200).json({ message: 'Token is valid' });
+        } else {
+            res.status(401).json({ message: 'Token is invalid' });
+        }
+    } catch (e) {
+        res.status(401).json({ message: 'Token is invalid' });
     }
-    else{
-        res.status(401).json({message: 'Token is invalid'})
-    }}
-    catch(e){
-        res.status(401).json({message: 'Token is invalid'})
+});
+
+// Logout Route
+router.post('/logout', (req, res) => {
+    let token = req.headers.authorization;
+    if (!token) {
+        return res.status(400).json({ message: "No token provided" });
     }
-})
+
+    const tokenParts = token.split(' ');
+    token = tokenParts[1];
+
+    // Get shared blacklist from app.js
+    const blacklistedTokens = req.app.get("blacklistedTokens");
+
+    blacklistedTokens.add(token); // Add token to blacklist
+
+    res.status(200).json({ message: "Logged out successfully" });
+});
 
 module.exports = router;

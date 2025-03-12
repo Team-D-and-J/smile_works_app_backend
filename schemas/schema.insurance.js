@@ -1,15 +1,21 @@
-const schema = require('mongoose').schema;
+const schema = require('mongoose').Schema;
 
 const definition = {
 	"_id": String,
-	"insuranceCo": String,
-	"Discount": {
+	"insuranceCompany": String,
+	"discount": {
 		"type": Number,
 		default: 0,
 	},
-	"userId": {
+	"memberId": {
 		"type": String,
 		"required": true,
+	},
+	"groupNumber": {
+		"type": String,
+	},
+	"userId": {
+		"type": String
 	},
 	_metadata: {
 		"createdAt": {
@@ -18,12 +24,11 @@ const definition = {
 		},
 		"lastUpdatedAt": {
 			"type": Date,
-			"required": true,
+			"default": Date.now,
 		},
 		"updatedBy": {
 			"type": String,
 			"required": true,
-
 		},
 
 		"isDeleted": {

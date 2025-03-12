@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const pino = require("pino");
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
@@ -40,7 +41,13 @@ async function connectToMongoDB() {
 // Model Names
 const modelNames = {
     user: "User",
-    notification: "Notification"
+    notification: "Notification",
+    treatment: "Treatment",
+    treatmentMaster: "TreatmentMaster",
+    productMaster: "ProductMaster",
+    inventory: "Inventory",
+    appointment: "Appointment",
+    clinic: "Clinic"
 };
 
 // Authentication Config (Merged from both branches)
@@ -56,5 +63,5 @@ module.exports = {
     LOG_LEVEL,
     logger,
     modelNames,
-    auth 
+    auth
 };
