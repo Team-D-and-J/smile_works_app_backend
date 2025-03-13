@@ -1,3 +1,5 @@
+const { stringify } = require("uuid");
+
 const schema = require("mongoose").Schema;
 
 const definition = {
@@ -13,21 +15,29 @@ const definition = {
 		type: String,
 		required: true,
 	},
+	unitPrice: {
+		type: String,
+		required: true,
+	},
 	unitOfMeasure: {
 		type: String,
 		required: true,
 	},
 	stock: {
 		type: Number,
+		required: true,
 	},
 	stockThreshold: {
 		type: Number,
+		required: true,
 	},
 	brand: {
 		type: String,
+		required: true,
 	},
 	category: {
 		type: String,
+		required: true,
 	},
 
 	_metadata: {
