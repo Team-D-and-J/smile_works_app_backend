@@ -23,6 +23,12 @@ const definition = {
 	stockThreshold: {
 		type: Number,
 	},
+	brand: {
+		type: String,
+	},
+	category: {
+		type: String,
+	},
 
 	_metadata: {
 		createdAt: {
