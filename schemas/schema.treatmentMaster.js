@@ -9,6 +9,11 @@ const DataPointSchema = schema({
     isMandatory: { type: Boolean, default: false }
 });
 
+const SpecificationSchema = schema({
+    name: { type: String, required: true }, 
+    priceAdjustment: { type: Number, required: true, default: 0 }
+});
+
 const treatmentMasterSchema = {
     _id: {
         type: String,
@@ -29,10 +34,10 @@ const treatmentMasterSchema = {
      * Specification:
      * - Can be a single string or an array of strings.("Adult", ["Adult","Adolescent" ])
      * - For some treatments (e.g., Braces, Implants), we might need additional details like the type of tooth.
-     * - Example values: "Adult", "Adolescent", "Molar", "Incisor", etc.
+     * - Example values: [{ "name": "Adolescent", "priceAdjustment": 0 },{ "name": "Adult", "priceAdjustment": 500 }]
      */
     specification: {
-        type: schema.Types.Mixed
+        type: [SpecificationSchema]
     },
     cost: {
         type: Number,

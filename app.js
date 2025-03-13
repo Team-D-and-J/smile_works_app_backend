@@ -3,7 +3,7 @@ const init = require("./init");
 const cors = require("cors");
 const logger = init.logger;
 const jwt = require("jsonwebtoken");
-const { createMetadata, updateMetadata } = require('./lib/metadataHandler')
+const { createMetadata, updateMetadata, generateId } = require('./lib/metadataHandler')
 
 const app = express();
 app.use(cors());
@@ -62,6 +62,9 @@ app.use(function(req, res, next) {
 // **Middleware 2: Metadata Handling (For POST and PUT Requests)**
 app.use((req, res, next) => {
     if (req.method === "POST" || req.method === "PUT") {
+        if (!req.body._id) {
+            req.body._id = generateId(); 
+        }
         req.body._metadata = req.body._metadata
             ? updateMetadata(req, req.body._metadata)
             : createMetadata(req);
@@ -83,7 +86,7 @@ app.use((req, res, next) => {
     app.use("/api/clinics", clinicRouter);
     app.use("/api/schedule", scheduleRouter);
     app.use("/api/patient", patientRouter);
-    app.use("/api/purchaseOrders", purchaseOrdersRouterRouter);
+    app.use("/api/purchaseOrders", purchaseOrdersRouter);
 
     app.listen(init.PORT, async () => {
         logger.info(`Server is running on port ${init.PORT}`);
