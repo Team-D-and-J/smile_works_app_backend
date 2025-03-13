@@ -5,6 +5,10 @@ const definition = {
 		type: String,
 		required: true,
 	},
+	name: {
+		type: String,
+		required: true,
+	},
 	clinicId: {
 		type: String,
 		required: true,
