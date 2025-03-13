@@ -21,6 +21,10 @@ const definition = {
 		type: String,
 		required: true,
 	},
+	unitPrice: {
+		type: Number,
+		required: true,
+	},
 	stock: {
 		type: Number,
 	},
