@@ -1,12 +1,6 @@
 const schema = require("mongoose").Schema;
 
 const productSchema = {
-	productId: {
-		type: String,
-		required: true,
-		unique: true,
-	},
-
 	name: {
 		type: String,
 		required: true,
@@ -15,8 +9,13 @@ const productSchema = {
 		type: String,
 		required: true,
 	},
-	unitPrice: {
-		type: Number,
+
+	brand: {
+		type: String,
+		required: true,
+	},
+	category: {
+		type: String,
 		required: true,
 	},
 
