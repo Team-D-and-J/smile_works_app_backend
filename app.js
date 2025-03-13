@@ -20,6 +20,7 @@ const treatmentMasterRouter = require("./routes/routes.treatmentMaster");
 const productMasterRouter = require("./routes/routes.productMaster");
 const inventoryRouter = require("./routes/routes.inventory");
 const insuranceRouter = require("./routes/routes.insurance");
+const vendorRouter = require("./routes/routes.vendor");
 
 // Store blacklisted tokens in memory
 const blacklistedTokens = new Set(); 
@@ -57,14 +58,24 @@ app.use(function (req, res, next) {
 });
 
 // **Middleware 2: Metadata Handling (For POST and PUT Requests)**
+// app.use((req, res, next) => {
+//     if (req.method === "POST" || req.method === "PUT") {
+//         req.body._metadata = req.body._metadata 
+//             ? updateMetadata(req, req.body._metadata)
+//             : createMetadata(req);
+//     }
+//     next();
+// });
+
 app.use((req, res, next) => {
-    if (req.method === "POST" || req.method === "PUT") {
-        req.body._metadata = req.body._metadata 
-            ? updateMetadata(req, req.body._metadata)
-            : createMetadata(req);
+    if ((req.method === "POST" || req.method === "PUT") && !req.body._metadata) {
+        req.body._metadata = createMetadata(req);
+    } else if (req.method === "PUT") {
+        req.body._metadata = updateMetadata(req, req.body._metadata);
     }
     next();
 });
+
 
 (async () => {
     await init.connectToMongoDB();
@@ -78,6 +89,7 @@ app.use((req, res, next) => {
     app.use("/api/inventory", inventoryRouter);
     app.use("/api/insurance", insuranceRouter);
     app.use("/api/clinics", clinicRouter);
+    app.use("/api/vendors", vendorRouter);
 
     app.listen(init.PORT, async () => {
         logger.info(`Server is running on port ${init.PORT}`);
