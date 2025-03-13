@@ -9,10 +9,7 @@ const productSchema = {
 		type: String,
 		required: true,
 	},
-	unitPrice: {
-		type: Number,
-		required: true,
-	},
+
 	brand: {
 		type: String,
 		required: true,
