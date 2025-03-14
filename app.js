@@ -23,6 +23,7 @@ const insuranceRouter = require("./routes/routes.insurance");
 const patientRouter = require("./routes/routes.patient");
 const purchaseOrdersRouter = require("./routes/routes.purchaseOrders");
 const scheduleRouter = require("./routes/routes.schedule");
+const vendorsRouter = require("./routes/routes.vendors");
 
 // Store blacklisted tokens in memory
 const blacklistedTokens = new Set();
@@ -83,7 +84,8 @@ app.use((req, res, next) => {
     app.use("/api/clinics", clinicRouter);
     app.use("/api/schedule", scheduleRouter);
     app.use("/api/patient", patientRouter);
-    app.use("/api/purchaseOrders", purchaseOrdersRouterRouter);
+    app.use("/api/purchaseOrders", purchaseOrdersRouter);
+    app.use("/api/vendors", vendorsRouter);
 
     app.listen(init.PORT, async () => {
         logger.info(`Server is running on port ${init.PORT}`);
