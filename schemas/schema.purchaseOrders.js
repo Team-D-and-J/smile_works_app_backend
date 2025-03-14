@@ -2,11 +2,10 @@ const schema = require("mongoose").Schema;
 
 const patientSchema = {
 	_id: { type: String, required: true },
-	vendor: {
-		name: { type: String, required: true },
-		productId: { type: String, required: true, },
-	},
-	name: { type: String, required: true, unique: true },
+	brand: { type: String, required: true },
+	productId: { type: String, required: true },
+	category: { type: String, required: true },
+	name: { type: String, required: true },
 	unitOfMeasure: { type: String, required: true },
 	unitPrice: { type: Number, required: true },
 	requestedQuantity: { type: Number, required: true },
