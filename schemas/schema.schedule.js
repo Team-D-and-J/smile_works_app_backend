@@ -3,7 +3,7 @@ const schema = require("mongoose").Schema;
 const scheduleSchema = {
 	_id: { type: String, required: true },
 	patientId: { type: String, required: true },
-	time: { type: String, required: true },
+	time: { type: Date, required: true },
 	treatment: { type: String, required: true },
 	_metadata: {
 		createdAt: { type: Date, default: Date.now },
