@@ -1,51 +1,66 @@
-const schema = require('mongoose').Schema;
+const schema = require("mongoose").Schema;
 
 const definition = {
-	"_id": {
-		"type": String,
-		"required": true,
+	_id: {
+		type: String,
+		required: true,
 	},
-	"clinicId": {
-		"type": String,
-		"required": true,
+	name: {
+		type: String,
+		required: true,
 	},
-	'productId': {
-		"type": String,
-		"required": true,
+	clinicId: {
+		type: String,
+		required: true,
 	},
-	"unitOfMeasure": {
-		"type": Number,
-		"unit": String,
+	productId: {
+		type: String,
+		required: true,
 	},
-	"stock": {
-		"type": Number,
+	unitOfMeasure: {
+		type: String,
+		required: true,
+	},
+	unitPrice: {
+		type: Number,
+		required: true,
+	},
+	stock: {
+		type: Number,
+	},
+	stockThreshold: {
+		type: Number,
+	},
+	brand: {
+		type: String,
+	},
+	category: {
+		type: String,
 	},
 
-	"_metadata": {
-		"createdAt": {
-			"type": Date,
-			"default": Date.now
+	_metadata: {
+		createdAt: {
+			type: Date,
+			default: Date.now,
 		},
-		"lastUpdatedAt": {
-			"type": Date,
-			"required": true,
-			"default": Date.now
+		lastUpdatedAt: {
+			type: Date,
+			required: true,
 		},
-		"updatedBy": {
-			"type": String,
-			"required": true,
+		updatedBy: {
+			type: String,
+			required: true,
 		},
 
-		"isDeleted": {
-
-			"type": Boolean,
-			"default": false,
+		isDeleted: {
+			type: Boolean,
+			default: false,
 		},
-		"version": {
-			"type": Number,
-			"default": 1
-		}
-	}
-}
+		version: {
+			type: Number,
+			default: 1,
+		},
+	},
+};
 
 module.exports = schema(definition);
