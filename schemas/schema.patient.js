@@ -3,7 +3,7 @@ const schema = require("mongoose").Schema;
 const patientSchema = {
 	_id: { type: String, required: true },
 	name: { type: String, required: true, unique: true },
-	dob: { type: String, required: true },
+	dob: { type: Date, required: true },
 	allergies: { type: String },
 	medicalHistory: { type: String, required: true },
 	insuranceInfo: {
