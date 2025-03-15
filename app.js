@@ -25,6 +25,7 @@ const purchaseOrdersRouter = require("./routes/routes.purchaseOrders");
 const scheduleRouter = require("./routes/routes.schedule");
 const billingRouter = require("./routes/routes.billing");
 
+const vendorsRouter = require("./routes/routes.vendors");
 
 // Store blacklisted tokens in memory
 const blacklistedTokens = new Set();
@@ -63,13 +64,13 @@ app.use(function (req, res, next) {
 
 // **Middleware 2: Metadata Handling (For POST and PUT Requests)**
 app.use((req, res, next) => {
-    if (!req.body._id) {
-        req.body._id = generateId();
-    }
-    if (req.method === "POST" || req.method === "PUT" && !req.body._metadata) {
-        req.body._metadata = createMetadata(req);
-    } else if (req.method === "PUT") {
-        req.body._metadata = updateMetadata(req, req.body._metadata);
+    if (req.method === "POST" || req.method === "PUT") {
+        if (!req.body._id) {
+            req.body._id = generateId();
+        }
+        req.body._metadata = req.body._metadata
+            ? updateMetadata(req, req.body._metadata)
+            : createMetadata(req);
     }
     next();
 });
@@ -91,6 +92,7 @@ app.use((req, res, next) => {
     app.use("/api/purchaseOrders", purchaseOrdersRouter);
     app.use("/api/billing", billingRouter);
 
+    app.use("/api/vendors", vendorsRouter);
 
     app.listen(init.PORT, async () => {
         logger.info(`Server is running on port ${init.PORT}`);

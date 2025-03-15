@@ -2,17 +2,17 @@ const schema = require("mongoose").Schema;
 
 const patientSchema = {
 	_id: { type: String, required: true },
-	name: { type: String, required: true, unique: true },
-	dob: { type: Date, required: true },
+	name: { type: String, required: true, },
+	dob: { type: String, required: true },
 	allergies: { type: String },
 	medicalHistory: { type: String, required: true },
 	insuranceInfo: {
 		insuranceProvider: { type: String },
-		phoneNumber: { type: String, unique: true },
+		phoneNumber: { type: String, },
 	},
 	emergencyInfo: {
 		name: { type: String, required: true },
-		phoneNumber: { type: Number, required: true, unique: true },
+		phoneNumber: { type: Number, required: true, },
 	},
 	address: {
 		street: { type: String },
@@ -20,7 +20,13 @@ const patientSchema = {
 		state: { type: String },
 		zip: { type: String },
 	},
-	phoneNumber: { type: String, required: true, unique: true },
+	phoneNumber: { type: String, required: true, },
+	email: { type: String, required: true },
+	notificationPreference: {
+		allowSMS: { type: Boolean, default: true },
+		allowEmail: { type: Boolean, default: true },
+		allowPhoneCall: { type: Boolean, default: false },
+	},
 	_metadata: {
 		createdAt: { type: Date, default: Date.now },
 		lastUpdatedAt: { type: Date, default: Date.now, required: true },
