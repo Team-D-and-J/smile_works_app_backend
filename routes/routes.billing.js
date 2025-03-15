@@ -1,26 +1,25 @@
 const router = require("express").Router();
 const mongooseCrud = require("mongoose-express-middleware");
 const mongoose = require("mongoose");
-const treatmentSchema = require("../schemas/schema.treatment");
+const billingSchema = require("../schemas/schema.billing");
 
-const treatmentCollection = "treatments"; 
-const crud = new mongooseCrud(treatmentCollection, treatmentSchema, null);
-const Treatment = mongoose.model("Treatment", treatmentSchema)
+const billingCollection = "billing"; 
+const crud = new mongooseCrud(billingCollection, billingSchema, null);
+const Billing = mongoose.model("Billing", billingSchema)
 // Define API routes
 router.get("/patient/:patientId", async (req, res) => {
     try{
         const {patientId} = req.params;
-        const treatments = await Treatment.find({ patientId, "_metadata.isDeleted": false})
-        if(!treatments.length){
-            return res.status(404).json({ message: "No treatments found for this patient." });
+        const insuranceList = await Billing.find({ patientId, "_metadata.isDeleted": false})
+        if(!insuranceList.length){
+            return res.status(404).json({ message: "No billing details found for this patient." });
         }
-        res.status(200).json(treatments)
+        res.status(200).json(insuranceList)
     } catch(error){
-        console.error("Error fetching treatments:", error);
+        console.error("Error fetching billing details:", error);
         res.status(500).json({ message: "Server error" });
     }
 })
-
 
 router.get("/", crud.find);
 router.get("/:id", crud.findById);
