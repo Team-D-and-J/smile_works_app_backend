@@ -12,11 +12,12 @@ const organizationSchema = {
 	_metadata: {
 		"createdAt": {
 			"type": Date,
-			"default": new Date()
+			"default": Date.now
 		},
 		"lastUpdatedAt": {
 			"type": Date,
 			"required": true,
+			"default": Date.now
 		},
 		"updatedBy": {
 			"type": String,
