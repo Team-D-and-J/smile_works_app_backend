@@ -3,7 +3,7 @@ const mongooseCrud = require("mongoose-express-middleware");
 const vendorsSchema = require("../schemas/schema.vendors");
 
 const vendorsCollection = "vendors";
-const crud = new mongooseCrud(vendorsCollection, vendorsSchemaSchema, null);
+const crud = new mongooseCrud(vendorsCollection, vendorsSchema, null);
 
 // Define API routes
 router.get("/", crud.find);
