@@ -3,9 +3,13 @@ const mongooseCrud = require("mongoose-express-middleware");
 const vendorsSchema = require("../schemas/schema.vendors");
 
 const vendorsCollection = "vendors";
+<<<<<<< Updated upstream
 const crud = new mongooseCrud(vendorsCollection, vendorsSchema, {
 	paginate: { defaultLimit: 0, maxLimit: 1000 },
 });
+=======
+const crud = new mongooseCrud(vendorsCollection, vendorsSchema, null);
+>>>>>>> Stashed changes
 
 // Define API routes
 router.get("/", crud.find);
