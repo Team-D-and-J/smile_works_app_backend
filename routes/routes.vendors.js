@@ -3,7 +3,9 @@ const mongooseCrud = require("mongoose-express-middleware");
 const vendorsSchema = require("../schemas/schema.vendors");
 
 const vendorsCollection = "vendors";
-const crud = new mongooseCrud(vendorsCollection, vendorsSchema, null);
+const crud = new mongooseCrud(vendorsCollection, vendorsSchema, {
+	paginate: { defaultLimit: 0, maxLimit: 1000 },
+});
 
 // Define API routes
 router.get("/", crud.find);

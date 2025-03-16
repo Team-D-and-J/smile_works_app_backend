@@ -23,6 +23,8 @@ const insuranceRouter = require("./routes/routes.insurance");
 const patientRouter = require("./routes/routes.patient");
 const purchaseOrdersRouter = require("./routes/routes.purchaseOrders");
 const scheduleRouter = require("./routes/routes.schedule");
+const billingRouter = require("./routes/routes.billing");
+
 const vendorsRouter = require("./routes/routes.vendors");
 
 // Store blacklisted tokens in memory
@@ -31,7 +33,7 @@ app.set("blacklistedTokens", blacklistedTokens);
 const clinicRouter = require("./routes/routes.clinic");
 
 // Middleware for protecting routes (except login and logout)
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     if (req.path.startsWith("/api/auth/login") || req.path.startsWith("/api/auth/logout")) {
         next();
         return;
@@ -88,6 +90,8 @@ app.use((req, res, next) => {
     app.use("/api/schedule", scheduleRouter);
     app.use("/api/patient", patientRouter);
     app.use("/api/purchaseOrders", purchaseOrdersRouter);
+    app.use("/api/billing", billingRouter);
+
     app.use("/api/vendors", vendorsRouter);
 
     app.listen(init.PORT, async () => {
