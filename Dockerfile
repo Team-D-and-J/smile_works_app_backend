@@ -4,7 +4,7 @@ WORKDIR /app
 
 
 COPY package.json package.json
-RUN npm install --production
+RUN npm install --omit=dev
 
 
 COPY app.js app.js
