@@ -57,6 +57,8 @@ app.use(function (req, res, next) {
         if (!tokenData) {
             return res.status(401).json({ message: "Unauthorized - Invalid token" });
         }
+        const decoded = jwt.decode(token);
+        req.user = decoded.id;
         next();
     } catch (error) {
         return res.status(401).json({ message: "Unauthorized - Invalid token" });
