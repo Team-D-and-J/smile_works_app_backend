@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const mongooseCrud = require("mongoose-express-middleware");
 const productMasterSchema = require("../schemas/schema.productMaster");
+const init = require("../init");
 
-const productMasterCollection = "productMaster";
+const productMasterCollection = init.modelNames.productMaster;
 const crud = new mongooseCrud(
 	productMasterCollection,
 	productMasterSchema,
