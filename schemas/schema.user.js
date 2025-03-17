@@ -15,13 +15,8 @@ const userSchema = {
         zip: { type: String },
     },
     roles: {
-        isPatient: { type: Boolean, default: false },
         isDoctor: { type: Boolean, default: false },
         isNurse: { type: Boolean, default: false },
-    },
-    billingDetails: {
-        cardNumber: { type: String },
-        insuranceProvider: { type: String },
     },
     notificationPreference: {
         allowSMS: { type: Boolean, default: true },
