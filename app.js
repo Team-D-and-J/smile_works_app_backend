@@ -12,6 +12,7 @@ app.use(express.json()); // Enable JSON parsing in incoming requests
 const apiLogger = require("./lib/middleware.apiLogger");
 app.use(apiLogger);
 
+const organizationRouter = require("./routes/routes.organization");
 const userRouter = require("./routes/routes.user");
 const notificationRouter = require("./routes/routes.notification");
 const authRouter = require("./routes/routes.auth");
@@ -78,6 +79,7 @@ app.use((req, res, next) => {
 (async () => {
     await init.connectToMongoDB();
 
+    app.use("/api/organizations", organizationRouter);
     app.use("/api/users", userRouter);
     app.use("/api/notifications", notificationRouter);
     app.use("/api/auth", authRouter);

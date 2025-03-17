@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const mongooseCrud = require("mongoose-express-middleware");
 const scheduleSchema = require("../schemas/schema.schedule");
+const init = require("../init");
 
-const scheduleCollection = "schedule";
+const scheduleCollection = init.modelNames.schedule;
 const crud = new mongooseCrud(scheduleCollection, scheduleSchema, null);
 
 // Define API routes

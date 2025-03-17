@@ -4,12 +4,14 @@ const jwt = require('jsonwebtoken');
 const init = require('../init')
 const crypto = require('crypto');
 const mongoose = require("mongoose");
+
 const userSchema = require("../schemas/schema.user");
-const userModel = mongoose.model("User", userSchema);
-router.post('/login', async(req, res) =>{
+const userModel = mongoose.model(init.modelNames.user, userSchema);
+
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    try{
+    try {
         // Find the user in MongoDB
         const user = await userModel.findOne({ _id: username });
 
@@ -28,17 +30,17 @@ router.post('/login', async(req, res) =>{
 
         //Generate JWT token
         const token = jwt.sign(
-            {id: user._id }, //Payload (data in token)
-            init.auth.jwtTokenSecret,{
-                expiresIn: init.auth.jwtTokenExpiry
-            });
-        res.status(200).json({token: token,});
+            { id: user._id }, //Payload (data in token)
+            init.auth.jwtTokenSecret, {
+            expiresIn: init.auth.jwtTokenExpiry
+        });
+        res.status(200).json({ token: token, });
     }
-    catch(error){
+    catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
-  
-  
+
+
 });
 
 router.get('/verify', (req, res) => {
