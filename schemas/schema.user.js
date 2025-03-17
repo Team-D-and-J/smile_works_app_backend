@@ -7,7 +7,7 @@ const userSchema = {
     salt: { type: String, default: () => Date.now().toString() },
     email: { type: String, required: true, unique: true },
     phoneNumber: { type: String, required: true, unique: true },
-    orgID: { type: String, required: true },
+    orgIDs: { type: [String], required: true },
     address: {
         street: { type: String },
         city: { type: String },

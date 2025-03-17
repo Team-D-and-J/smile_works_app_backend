@@ -13,7 +13,7 @@ let adminUser = {
     password: "123123123",
     phoneNumber: "1234567890",
     salt: null,
-    orgID: "org1",
+    orgIDs: ["sampleOrg"],
     address: {
         street: "123 Admin St",
         city: "AdminCity",

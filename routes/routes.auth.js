@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const init = require('../init')
 const crypto = require('crypto');
 const mongoose = require("mongoose");
+const logger = init.logger;
 
 const userSchema = require("../schemas/schema.user");
 const userModel = mongoose.model(init.modelNames.user, userSchema);
@@ -43,10 +44,11 @@ router.post('/login', async (req, res) => {
 
 });
 
-router.get('/verify', (req, res) => {
+router.get('/verify', async (req, res) => {
     try {
         let token = req.headers.authorization;
         if (!token) {
+            logger.error("Vefiy API: Token is missing");
             return res.status(401).json({ message: 'Token is missing' });
         }
 
@@ -57,15 +59,22 @@ router.get('/verify', (req, res) => {
         const blacklistedTokens = req.app.get("blacklistedTokens");
 
         if (blacklistedTokens.has(token)) {
+            logger.error("Vefiy API: Token has been logged out");
             return res.status(401).json({ message: "Token has been logged out" });
         }
 
         if (jwt.verify(token, init.auth.jwtTokenSecret)) {
-            res.status(200).json({ message: 'Token is valid' });
+            logger.info("Vefiy API: Token is valid");
+            const decoded = jwt.decode(token);
+            logger.trace(`Vefiy API: ${JSON.stringify(decoded)}`);
+            const user = await userModel.findOne({ _id: decoded.id }).select("-password -salt -_metadata");
+            res.status(200).json(user);
         } else {
+            logger.error("Vefiy API: Token is invalid");
             res.status(401).json({ message: 'Token is invalid' });
         }
     } catch (e) {
+        logger.error(e);
         res.status(401).json({ message: 'Token is invalid' });
     }
 });
