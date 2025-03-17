@@ -2,11 +2,11 @@ const schema = require("mongoose").Schema;
 
 const userSchema = {
     _id: { type: String, required: true },
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
     password: { type: String, required: true },
     salt: { type: String, default: () => Date.now().toString() },
-    email: { type: String, required: true, unique: true },
-    phoneNumber: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
     orgIDs: { type: [String], required: true },
     address: {
         street: { type: String },
