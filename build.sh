@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git pull
+
 TAG=$(date +%Y.%m.%d.%H.%M)
 echo "Building smile_works_app_backend:$TAG"
 
