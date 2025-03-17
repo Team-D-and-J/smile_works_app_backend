@@ -13,7 +13,7 @@ let adminUser = {
     password: "123123123",
     phoneNumber: "1234567890",
     salt: null,
-    orgID: "org1", 
+    orgIDs: ["sampleOrg"],
     address: {
         street: "123 Admin St",
         city: "AdminCity",
@@ -21,13 +21,8 @@ let adminUser = {
         zip: "00000",
     },
     roles: {
-        isPatient: false,
         isDoctor: true,
         isNurse: false,
-    },
-    billingDetails: {
-        cardNumber: "4111111111111111",
-        insuranceProvider: "AdminInsurance",
     },
     notificationPreference: {
         allowSMS: true,

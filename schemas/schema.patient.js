@@ -22,6 +22,10 @@ const patientSchema = {
 	},
 	phoneNumber: { type: String, required: true, },
 	email: { type: String, required: true },
+	billingDetails: {
+		cardNumber: { type: String },
+		insuranceProvider: { type: String },
+	},
 	notificationPreference: {
 		allowSMS: { type: Boolean, default: true },
 		allowEmail: { type: Boolean, default: true },

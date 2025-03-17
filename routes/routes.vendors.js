@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const mongooseCrud = require("mongoose-express-middleware");
 const vendorsSchema = require("../schemas/schema.vendors");
+const init = require("../init");
 
-const vendorsCollection = "vendors";
+const vendorsCollection = init.modelNames.vendor;
 const crud = new mongooseCrud(vendorsCollection, vendorsSchema, {
 	paginate: { defaultLimit: 0, maxLimit: 1000 },
 });
