@@ -20,14 +20,14 @@ router.post("/utils/aggregate", crud.aggregate);
 
 router.get("/search", async (req, res) => {
     try {
-        const { name, _id, dob } = req.query;
+        const { name, dob, _id } = req.query;
         if (!name || !_id || !dob) {
             return res.status(400).json({ error: "name, _id, or dob is missing" });
         }
         const filter = {
             name: name,
-            _id: _id,
             dob: dob,
+            _id: _id,
         };
         const results = await Patient.find(filter);
         res.status(200).json({ results });
