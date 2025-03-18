@@ -2,12 +2,12 @@ const schema = require("mongoose").Schema;
 
 const userSchema = {
     _id: { type: String, required: true },
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
     password: { type: String, required: true },
     salt: { type: String, default: () => Date.now().toString() },
-    email: { type: String, required: true, unique: true },
-    phoneNumber: { type: String, required: true, unique: true },
-    orgID: { type: String, required: true },
+    email: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+    orgIDs: { type: [String], required: true },
     address: {
         street: { type: String },
         city: { type: String },
@@ -15,13 +15,8 @@ const userSchema = {
         zip: { type: String },
     },
     roles: {
-        isPatient: { type: Boolean, default: false },
         isDoctor: { type: Boolean, default: false },
         isNurse: { type: Boolean, default: false },
-    },
-    billingDetails: {
-        cardNumber: { type: String },
-        insuranceProvider: { type: String },
     },
     notificationPreference: {
         allowSMS: { type: Boolean, default: true },
