@@ -101,6 +101,5 @@ app.use((req, res, next) => {
     app.listen(init.PORT, async () => {
         logger.info(`Server is running on port ${init.PORT}`);
         await require("./init-scripts/init.org")();
-        await require("./init-scripts/init.user")();
     });
 })();
