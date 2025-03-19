@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const mongooseCrud = require("mongoose-express-middleware");
 const notificationSchema = require("../schemas/schema.notification");
+const init = require("../init");
 
-const notificationCollection = "notifications"; 
+const notificationCollection = init.modelNames.notification;
 const crud = new mongooseCrud(notificationCollection, notificationSchema, null);
 
 // Define API routes

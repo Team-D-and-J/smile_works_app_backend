@@ -1,6 +1,10 @@
 const schema = require("mongoose").Schema;
 
 const productSchema = {
+	_id: {
+		type: String,
+		required: true,
+	},
 	name: {
 		type: String,
 		required: true,

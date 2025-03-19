@@ -20,7 +20,7 @@ const definition = {
 	_metadata: {
 		"createdAt": {
 			"type": Date,
-			"default": new Date()
+			"default": Date.now
 		},
 		"lastUpdatedAt": {
 			"type": Date,

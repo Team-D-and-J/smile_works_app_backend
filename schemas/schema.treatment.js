@@ -1,10 +1,9 @@
 const schema = require("mongoose").Schema;
 
 const treatementSchema = {
-    treatmentId: {
+    _id: {
         type: String,
-        required: true,
-        unique: true,
+		required: true
     },
     organizationId: {
         type: String,
@@ -25,14 +24,16 @@ const treatementSchema = {
     steps: {
         type: String
     },
+    status: {
+        type: String,
+        required: true
+    },
     files: [{
         fileName: { 
             type: String,
-            required: true 
         },
         fileLink: { 
             type: String, 
-            required: true 
         },
         fileType: { 
             type: String

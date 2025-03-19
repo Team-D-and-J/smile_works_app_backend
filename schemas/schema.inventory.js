@@ -5,6 +5,10 @@ const definition = {
 		type: String,
 		required: true,
 	},
+	name: {
+		type: String,
+		required: true,
+	},
 	clinicId: {
 		type: String,
 		required: true,
@@ -15,6 +19,10 @@ const definition = {
 	},
 	unitOfMeasure: {
 		type: String,
+		required: true,
+	},
+	unitPrice: {
+		type: Number,
 		required: true,
 	},
 	stock: {
@@ -33,7 +41,7 @@ const definition = {
 	_metadata: {
 		createdAt: {
 			type: Date,
-			default: new Date(),
+			default: Date.now,
 		},
 		lastUpdatedAt: {
 			type: Date,

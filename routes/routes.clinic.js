@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const mongooseCrud = require("mongoose-express-middleware");
 const clinicSchema = require("../schemas/schema.clinic");
+const init = require("../init");
 
-const clinicCollection = "clinics"; 
+const clinicCollection = init.modelNames.clinic;
 const crud = new mongooseCrud(clinicCollection, clinicSchema, null);
 
 // Define API routes

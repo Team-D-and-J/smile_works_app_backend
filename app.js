@@ -3,7 +3,7 @@ const init = require("./init");
 const cors = require("cors");
 const logger = init.logger;
 const jwt = require("jsonwebtoken");
-const { createMetadata, updateMetadata } = require('./lib/metadataHandler')
+const { createMetadata, updateMetadata, generateId } = require('./lib/metadataHandler')
 
 const app = express();
 app.use(cors());
@@ -12,6 +12,7 @@ app.use(express.json()); // Enable JSON parsing in incoming requests
 const apiLogger = require("./lib/middleware.apiLogger");
 app.use(apiLogger);
 
+const organizationRouter = require("./routes/routes.organization");
 const userRouter = require("./routes/routes.user");
 const notificationRouter = require("./routes/routes.notification");
 const authRouter = require("./routes/routes.auth");
@@ -24,6 +25,9 @@ const vendorRouter = require("./routes/routes.vendor");
 const patientRouter = require("./routes/routes.patient");
 const purchaseOrdersRouter = require("./routes/routes.purchaseOrders");
 const scheduleRouter = require("./routes/routes.schedule");
+const billingRouter = require("./routes/routes.billing");
+
+const vendorsRouter = require("./routes/routes.vendors");
 
 // Store blacklisted tokens in memory
 const blacklistedTokens = new Set();
@@ -31,7 +35,7 @@ app.set("blacklistedTokens", blacklistedTokens);
 const clinicRouter = require("./routes/routes.clinic");
 
 // Middleware for protecting routes (except login and logout)
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     if (req.path.startsWith("/api/auth/login") || req.path.startsWith("/api/auth/logout")) {
         next();
         return;
@@ -54,6 +58,8 @@ app.use(function(req, res, next) {
         if (!tokenData) {
             return res.status(401).json({ message: "Unauthorized - Invalid token" });
         }
+        const decoded = jwt.decode(token);
+        req.user = decoded.id;
         next();
     } catch (error) {
         return res.status(401).json({ message: "Unauthorized - Invalid token" });
@@ -71,10 +77,13 @@ app.use(function(req, res, next) {
 // });
 
 app.use((req, res, next) => {
-    if ((req.method === "POST" || req.method === "PUT") && !req.body._metadata) {
-        req.body._metadata = createMetadata(req);
-    } else if (req.method === "PUT") {
-        req.body._metadata = updateMetadata(req, req.body._metadata);
+    if (req.method === "POST" || req.method === "PUT") {
+        if (!req.body._id) {
+            req.body._id = generateId();
+        }
+        req.body._metadata = req.body._metadata
+            ? updateMetadata(req, req.body._metadata)
+            : createMetadata(req);
     }
     next();
 });
@@ -83,6 +92,7 @@ app.use((req, res, next) => {
 (async () => {
     await init.connectToMongoDB();
 
+    app.use("/api/organizations", organizationRouter);
     app.use("/api/users", userRouter);
     app.use("/api/notifications", notificationRouter);
     app.use("/api/auth", authRouter);
@@ -96,9 +106,12 @@ app.use((req, res, next) => {
     app.use("/api/schedule", scheduleRouter);
     app.use("/api/patient", patientRouter);
     app.use("/api/purchaseOrders", purchaseOrdersRouter);
+    app.use("/api/billing", billingRouter);
+
+    app.use("/api/vendors", vendorsRouter);
 
     app.listen(init.PORT, async () => {
         logger.info(`Server is running on port ${init.PORT}`);
-        await require("./init-scripts/init.user")();
+        await require("./init-scripts/init.org")();
     });
 })();

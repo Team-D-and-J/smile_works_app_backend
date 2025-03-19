@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const mongooseCrud = require("mongoose-express-middleware");
 const purchaseOrdersSchema = require("../schemas/schema.purchaseOrders");
+const init = require("../init");
 
-const purchaseOrdersCollection = "inventory";
+const purchaseOrdersCollection = init.modelNames.purchaseOrder;
 const crud = new mongooseCrud(purchaseOrdersCollection, purchaseOrdersSchema, null);
 
 // Define API routes

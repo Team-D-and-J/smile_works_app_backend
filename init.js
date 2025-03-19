@@ -40,15 +40,21 @@ async function connectToMongoDB() {
 
 // Model Names
 const modelNames = {
-    user: "User",
-    notification: "Notification",
-    treatment: "Treatment",
-    treatmentMaster: "TreatmentMaster",
-    productMaster: "ProductMaster",
-    inventory: "Inventory",
-    appointment: "Appointment",
-    clinic: "Clinic",
-    vendor: "Vendor"
+    billing: "billing",
+    clinic: "clinic",
+    insurance: "insurance",
+    inventory: "inventory",
+    notification: "notification",
+    patient: "patient",
+    productMaster: "productMaster",
+    purchaseOrder: "purchaseOrder",
+    schedule: "schedule",
+    treatmentMaster: "treatmentMaster",
+    treatment: "treatment",
+    user: "user",
+    vendor: "vendor",
+    organization: "organization",
+    appointment: "appointment",
 };
 
 // Authentication Config (Merged from both branches)
