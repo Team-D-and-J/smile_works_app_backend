@@ -15,6 +15,6 @@ git pull
 TAG=$(date +%Y.%m.%d.%H.%M)
 echo "Building smile_works_app_backend:$TAG"
 
-docker build -t smile_works_app_backend:"$TAG" .
+docker build -t smile_works_app_backend:"$TAG" . --platform linux/amd64
 
 echo "$TAG" > ~/BUILD_BACKEND_TAG
