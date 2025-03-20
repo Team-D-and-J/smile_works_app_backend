@@ -9,7 +9,6 @@ const crud = new mongooseCrud(patientCollection, patientSchema, null);
 const Patient = mongoose.model(init.modelNames.patient, patientSchema);
 
 // Define API routes
-router.get("/", crud.find);
 router.get("/:id", crud.findById);
 router.get("/utils/count", crud.count);
 router.post("/", crud.create);
@@ -18,7 +17,7 @@ router.delete("/:id", crud.deleteById);
 router.delete("/utils/deleteMany", crud.deleteMany);
 router.post("/utils/aggregate", crud.aggregate);
 
-router.get("/search", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const { name, dob, _id } = req.query;
         if (!name || !_id || !dob) {
