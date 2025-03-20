@@ -25,7 +25,7 @@ const patientRouter = require("./routes/routes.patient");
 const purchaseOrdersRouter = require("./routes/routes.purchaseOrders");
 const scheduleRouter = require("./routes/routes.schedule");
 const billingRouter = require("./routes/routes.billing");
-
+const appointmentRouter = require("./routes/routes.appointment")
 const vendorsRouter = require("./routes/routes.vendors");
 
 // Store blacklisted tokens in memory
@@ -65,16 +65,6 @@ app.use(function (req, res, next) {
     }
 });
 
-// **Middleware 2: Metadata Handling (For POST and PUT Requests)**
-// app.use((req, res, next) => {
-//     if (req.method === "POST" || req.method === "PUT") {
-//         req.body._metadata = req.body._metadata 
-//             ? updateMetadata(req, req.body._metadata)
-//             : createMetadata(req);
-//     }
-//     next();
-// });
-
 app.use((req, res, next) => {
     if (req.method === "POST" || req.method === "PUT") {
         if (!req.body._id) {
@@ -105,7 +95,7 @@ app.use((req, res, next) => {
     app.use("/api/patient", patientRouter);
     app.use("/api/purchaseOrders", purchaseOrdersRouter);
     app.use("/api/billing", billingRouter);
-
+    app.use("/api/appointment", appointmentRouter);
     app.use("/api/vendors", vendorsRouter);
 
     app.listen(init.PORT, async () => {
