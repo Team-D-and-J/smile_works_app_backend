@@ -21,7 +21,6 @@ const treatmentMasterRouter = require("./routes/routes.treatmentMaster");
 const productMasterRouter = require("./routes/routes.productMaster");
 const inventoryRouter = require("./routes/routes.inventory");
 const insuranceRouter = require("./routes/routes.insurance");
-const vendorRouter = require("./routes/routes.vendor");
 const patientRouter = require("./routes/routes.patient");
 const purchaseOrdersRouter = require("./routes/routes.purchaseOrders");
 const scheduleRouter = require("./routes/routes.schedule");
@@ -102,7 +101,6 @@ app.use((req, res, next) => {
     app.use("/api/inventory", inventoryRouter);
     app.use("/api/insurance", insuranceRouter);
     app.use("/api/clinics", clinicRouter);
-    app.use("/api/vendors", vendorRouter);
     app.use("/api/schedule", scheduleRouter);
     app.use("/api/patient", patientRouter);
     app.use("/api/purchaseOrders", purchaseOrdersRouter);
