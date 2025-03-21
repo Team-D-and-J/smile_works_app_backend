@@ -1,6 +1,4 @@
-const schema = require("mongoose").Schema;
-
-
+const schema = require('mongoose').Schema;
 const definition = new schema({
 	_id: String,
 	doctorId: {
