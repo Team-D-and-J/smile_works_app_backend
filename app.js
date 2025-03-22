@@ -25,12 +25,8 @@ const patientRouter = require("./routes/routes.patient");
 const purchaseOrdersRouter = require("./routes/routes.purchaseOrders");
 const scheduleRouter = require("./routes/routes.schedule");
 const billingRouter = require("./routes/routes.billing");
-<<<<<<< HEAD
-const appointmentRouter = require("./routes/routes.appointment")
-=======
 const appointmentRouter = require("./routes/routes.appointment");
 
->>>>>>> 38bdd300d52c45d73f64e69047fdf032f9ef9454
 const vendorsRouter = require("./routes/routes.vendors");
 
 // Store blacklisted tokens in memory
@@ -101,10 +97,6 @@ app.use((req, res, next) => {
     app.use("/api/purchaseOrders", purchaseOrdersRouter);
     app.use("/api/billing", billingRouter);
     app.use("/api/appointment", appointmentRouter);
-<<<<<<< HEAD
-=======
-
->>>>>>> 38bdd300d52c45d73f64e69047fdf032f9ef9454
     app.use("/api/vendors", vendorsRouter);
 
     app.listen(init.PORT, async () => {
