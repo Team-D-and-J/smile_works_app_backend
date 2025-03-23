@@ -1,68 +1,91 @@
 const router = require("express").Router();
 const mongooseCrud = require("mongoose-express-middleware");
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 const Patient = require("../schemas/schema.patient");
 const User = require("../schemas/schema.user");
 const Appointment = require("../schemas/schema.appointment");
 
 const appointmentCollection = "appointment";
-const crud = new mongooseCrud(appointmentCollection, Appointment, null); 
+const crud = new mongooseCrud(appointmentCollection, Appointment, null);
 const appointment = mongoose.model("Appointment", Appointment);
 
-const patientCollection = "patient";
 const patient = mongoose.model("Patient", Patient);
-
-const userCollection = "user";
 const user = mongoose.model("User", User);
 
-// API to fetch appointments in ascending order of date
-
-
+// API to fetch schedule with optional view filters (day/week)
 router.get("/", async (req, res) => {
   try {
-      console.log("Fetching appointments in ascending order...");
+    let view, date, start;
+    if (req.query.filter) {
+      const parsed = JSON.parse(req.query.filter);
+      view = parsed.view;
+      date = parsed.date;
+      start = parsed.start;
+    } else {
+      view = req.query.view;
+      date = req.query.date;
+      start = req.query.start;
+    }
 
-      // Fetch appointments sorted by date
-      const appointments = await appointment.find().sort({ date: 1 });
+    console.log("Fetching schedule view:", view);
 
-      if (!appointments || appointments.length === 0) {
-          return res.status(404).json({ message: "No appointments found" });
-      }
+    let filter = {};
+    let startDate, endDate;
 
-      // Enrich appointments with doctor and patient names
-      const appointmentsWithDetails = await Promise.all(
-          appointments.map(async (appointment) => {
-              const patient_rec = await patient.findById(appointment.patientId).select("name");
-              let doctorName = "Unknown Doctor";
-              
-            
-              if (appointment.doctorId) {
-                const doctor_rec = await user.findById(appointment.doctorId).select("name roles");
-                if (doctor_rec && doctor_rec.roles.isDoctor) {
-                  doctorName = doctor_rec.name;
-                }
-              }
+    if (view === "day" && date) {
+      startDate = moment(date).startOf("day").toDate();
+      endDate = moment(date).endOf("day").toDate();
+      filter.date = { $gte: startDate, $lte: endDate };
+    } else if (view === "week" && start) {
+      startDate = moment(start).startOf("day").toDate();
+      endDate = moment(start).add(6, "days").endOf("day").toDate();
+      filter.date = { $gte: startDate, $lte: endDate };
+    }
 
-              return {
-                  //_id: appointment._id,
-                  date: appointment.date 
-                ? new Date(appointment.date).toISOString().replace("T", " ").substring(0, 16) 
-                : "Invalid Date",
-                  patientName: patient_rec ? patient_rec.name : "Unknown Patient",
-                  doctorName: doctorName,
-                  treatmentMaster: appointment.treatmentMaster || "No treatment information",
-                  status: appointment.status,
-              };
-          })
-      );
+    const appointments = await appointment.find(filter).sort({ date: 1 });
 
-      return res.json(appointmentsWithDetails);
+    if (!appointments.length) {
+  return res.json({});
+}
+
+    const enriched = await Promise.all(
+      appointments.map(async (appt) => {
+        const patient_rec = await patient.findById(appt.patientId).select("name");
+        const doctor_rec = appt.doctorId
+          ? await user.findById(appt.doctorId).select("name roles")
+          : null;
+
+        return {
+          _id: appt._id,
+          date: appt.date,
+          time: moment(appt.date).format("hh:mm A"),
+          patientName: patient_rec?.name || "Unknown Patient",
+          doctorName: doctor_rec?.roles?.isDoctor ? doctor_rec.name : "Unknown Doctor",
+          treatmentMaster: appt.treatmentMaster || "No treatment info",
+          status: appt.status,
+        };
+      })
+    );
+
+    const grouped = enriched.reduce((acc, curr) => {
+      const dateKey = moment(curr.date).format("YYYY-MM-DD");
+      if (!acc[dateKey]) acc[dateKey] = [];
+      acc[dateKey].push(curr);
+      return acc;
+    }, {});
+
+    return res.json(grouped);
   } catch (error) {
-      console.error("Error fetching appointments:", error);
-      return res.status(500).json({ message: "Error retrieving appointments", error: error.message });
+    console.error("Schedule fetch error:", error);
+    return res.status(500).json({ message: "Something went wrong", error: error.message });
   }
 });
+
+
+
+// Standard CRUD endpoints
 router.get("/:id", crud.findById);
 router.get("/utils/count", crud.count);
 router.post("/", crud.create);

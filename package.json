@@ -19,6 +19,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
     "mongoose-express-middleware": "^2.0.1",
     "pino": "^9.6.0",
     "smile_works_app_backend": "file:",

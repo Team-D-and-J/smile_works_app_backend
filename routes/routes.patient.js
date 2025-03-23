@@ -20,19 +20,20 @@ router.post("/utils/aggregate", crud.aggregate);
 router.get("/", async (req, res) => {
     try {
         const { name, dob, _id } = req.query;
-        if (!name || !_id || !dob) {
-            return res.status(400).json({ error: "name, _id, or dob is missing" });
-        }
-        const filter = {
-            name: name,
-            dob: dob,
-            _id: _id,
-        };
+
+        // Build dynamic filter if query params exist
+        const filter = {};
+        if (name) filter.name = name;
+        if (dob) filter.dob = dob;
+        if (_id) filter._id = _id;
+
         const results = await Patient.find(filter);
         res.status(200).json({ results });
     } catch (error) {
-        return res.status(500).json({ status: "Error", message: "Could not find patient." })
-    };
+        console.error("Error fetching patients:", error);
+        return res.status(500).json({ status: "Error", message: "Could not find patient." });
+    }
 });
+
 
 module.exports = router;
