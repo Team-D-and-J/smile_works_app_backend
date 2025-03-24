@@ -15,6 +15,12 @@ git pull
 TAG=$(date +%Y.%m.%d.%H.%M)
 echo "Building smile_works_app_backend:$TAG"
 
-docker build -t smile_works_app_backend:"$TAG" . --platform linux/amd64
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	echo "Building for macOS"
+  docker build -t smile_works_app_backend:"$TAG" .
+else
+	echo "Building for Linux"
+  docker build -t smile_works_app_backend:"$TAG" . --platform linux/amd64
+fi
 
 echo "$TAG" > ~/BUILD_BACKEND_TAG

@@ -66,7 +66,6 @@ app.use(function (req, res, next) {
     }
 });
 
-// **Middleware 2: Metadata Handling (For POST and PUT Requests)**
 app.use((req, res, next) => {
     if (req.method === "POST" || req.method === "PUT") {
         if (!req.body._id) {
@@ -78,6 +77,7 @@ app.use((req, res, next) => {
     }
     next();
 });
+
 
 (async () => {
     await init.connectToMongoDB();
@@ -97,7 +97,6 @@ app.use((req, res, next) => {
     app.use("/api/purchaseOrders", purchaseOrdersRouter);
     app.use("/api/billing", billingRouter);
     app.use("/api/appointment", appointmentRouter);
-
     app.use("/api/vendors", vendorsRouter);
 
     app.listen(init.PORT, async () => {
