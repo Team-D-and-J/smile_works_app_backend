@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
 
         // Build dynamic filter if query params exist
         const filter = {};
-        if (name) filter.name = name;
+        if (name) filter.name = { $regex: name, $options: "i" };
         if (dob) filter.dob = dob;
         if (_id) filter._id = _id;
 
