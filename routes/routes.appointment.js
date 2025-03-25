@@ -63,6 +63,80 @@ router.get("/utils/available-times", async (req, res) => {
     console.error("Error checking availability:", err);
     res.status(500).json({ message: "Server error" });
   }
+})
+
+router.get("/utils/appointments-by-day", async (req, res) => {
+  try {
+    const { date } = req.query;
+
+    if (!date) {
+      return res.status(400).json({ message: "Date is required" });
+    }
+
+    const startOfDay = moment(date).startOf("day").toDate();
+    const endOfDay = moment(date).endOf("day").toDate();
+
+    const appointments = await appointmentModel.find({
+      date: { $gte: startOfDay, $lte: endOfDay },
+    });
+
+    return res.json(appointments);
+  } catch (err) {
+    console.error("Error fetching appointments by day:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/utils/appointments-count-by-week", async (req, res) => {
+  console.log("running backend api")
+  try {
+    const { date } = req.query;
+
+    if (!date) {
+      return res.status(400).json({ message: "Date is required" });
+    }
+
+    const startOfWeek = moment(date).startOf("week").toDate();
+    const endOfWeek = moment(date).endOf("week").toDate();
+
+    const appointments = await appointmentModel.aggregate([
+      {
+        $match: {
+          date: { $gte: startOfWeek, $lte: endOfWeek },
+        },
+      },
+      {
+        $group: {
+          _id: { $dayOfWeek: "$date" }, // Groups by day of the week (1 = Sunday, 7 = Saturday)
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { _id: 1 }, // Sorts from Sunday (1) to Saturday (7)
+      },
+    ]);
+
+    // Map the result to readable day names
+    const daysMap = {
+      1: "Sunday",
+      2: "Monday",
+      3: "Tuesday",
+      4: "Wednesday",
+      5: "Thursday",
+      6: "Friday",
+      7: "Saturday",
+    };
+    console.log("query" + req.query)
+    const formattedResult = appointments.map((item) => ({
+      day: daysMap[item._id],
+      count: item.count,
+    }));
+console.log("query" + req.query)
+    return res.json(formattedResult);
+  } catch (err) {
+    console.error("Error fetching weekly appointment count:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 
