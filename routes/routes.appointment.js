@@ -153,6 +153,45 @@ router.get("/utils/appointments-count-today", async (req, res) => {
   }
 });
 
+router.get("/utils/upcoming", async (req, res) => {
+  try {
+    const now = moment().startOf("day").toDate();
+    const endOfDay = moment().endOf("day").toDate();
 
+    // Fetch upcoming appointments
+    const appointments = await appointmentModel.find({
+      date: { $gte: now, $lte: endOfDay },
+      "status": { $ne: "Cancelled" }
+    }).sort({ date: 1 });
+
+    if (!appointments.length) return res.json([]);
+
+    // Get unique doctor and patient IDs
+    const doctorIds = [...new Set(appointments.map(a => a.doctorId))];
+    const patientIds = [...new Set(appointments.map(a => a.patientId))];
+
+    // Fetch doctor and patient names
+    const User = mongoose.model("User");
+    const Patient = mongoose.model("Patient");
+
+    const doctors = await User.find({ _id: { $in: doctorIds } }).select("name _id");
+    const patients = await Patient.find({ _id: { $in: patientIds } }).select("name _id");
+
+    const doctorMap = Object.fromEntries(doctors.map(d => [d._id, d.name]));
+    const patientMap = Object.fromEntries(patients.map(p => [p._id, p.name]));
+
+    // Attach names to appointments
+    const enrichedAppointments = appointments.map(a => ({
+      ...a._doc,
+      doctorName: doctorMap[a.doctorId] || "Unknown Doctor",
+      patientName: patientMap[a.patientId] || "Unknown Patient",
+    }));
+
+    res.json(enrichedAppointments);
+  } catch (err) {
+    console.error("Error fetching upcoming appointments:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 module.exports = router;
