@@ -10,7 +10,7 @@ const userSchema = require("../schemas/schema.user");
 const userModel = mongoose.model(init.modelNames.user, userSchema);
 
 router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, name } = req.body;
 
     try {
         // Find the user in MongoDB
@@ -35,7 +35,7 @@ router.post('/login', async (req, res) => {
             init.auth.jwtTokenSecret, {
             expiresIn: init.auth.jwtTokenExpiry
         });
-        res.status(200).json({ token: token, });
+        res.status(200).json({ token: token, name:user.name });
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error" });

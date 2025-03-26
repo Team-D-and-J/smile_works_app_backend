@@ -88,7 +88,6 @@ router.get("/utils/appointments-by-day", async (req, res) => {
 });
 
 router.get("/utils/appointments-count-by-week", async (req, res) => {
-  console.log("running backend api")
   try {
     const { date } = req.query;
 
@@ -135,6 +134,21 @@ console.log("query" + req.query)
     return res.json(formattedResult);
   } catch (err) {
     console.error("Error fetching weekly appointment count:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/utils/appointments-count-today", async (req, res) => {
+  try {
+    const today = moment().startOf("day").toDate(); // Beginning of today
+    const endOfDay = moment().endOf("day").toDate(); // End of today
+
+    const appointments = await appointmentModel.find({
+      date: { $gte: today, $lte: endOfDay }, // Filter today's appointments
+    });
+    return res.json(appointments);
+  } catch (err) {
+    console.error("Error fetching today's appointment count:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
