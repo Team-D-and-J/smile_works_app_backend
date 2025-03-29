@@ -12,9 +12,6 @@ router.get("/patient/:patientId", async (req, res) => {
     try {
         const { patientId } = req.params;
         const insuranceList = await Billing.find({ patientId, "_metadata.isDeleted": false })
-        if (!insuranceList.length) {
-            return res.status(404).json({ message: "No billing details found for this patient." });
-        }
         res.status(200).json(insuranceList)
     } catch (error) {
         console.error("Error fetching billing details:", error);
